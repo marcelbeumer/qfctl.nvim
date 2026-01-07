@@ -1,0 +1,105 @@
+*qfctl.txt*
+
+MIT License Copyright (c) 2025 Marcel Beumer
+
+------------------------------------------------------------------------------
+                                                                        *qfctl*
+
+Neovim plugin for quickfix control: add, edit, remove, sort, save and load.
+
+Does not modify the built-in quickfix in any way so plays nice with other
+plugins. 
+
+This module needs a setup with `require('qfctl').setup({})` where `{}` can be
+your config table in case you want to override defaults.
+
+See |qfctl-config| for the config table structure and defaults.
+
+------------------------------------------------------------------------------
+setup({config})                                                   *qfctl-setup*
+
+Module setup
+
+Parameters ~
+{config} `(table|nil)` Module config table. See |qfctl-config|.
+
+Usage ~
+>lua
+  require('qfctl').setup() -- use default config
+  -- OR
+  require('qfctl').setup({}) -- replace {} with your config table
+<
+------------------------------------------------------------------------------
+Config                                                           *qfctl-config*
+
+Defaults ~
+>lua
+  {
+    data_dir = vim.fn.stdpath("data") .. "/qfctl-lists",
+    mappings = { -- leave any part nil to disable
+      global = {
+	add_current_line = "<leader>qa",
+	add_prompt = "<leader>qA",
+      },
+      qf = {
+	add_prompt = "<leader>qA",
+	edit = "<leader>qe",
+	remove = "<C-d>",
+	move_up = "<C-k>",
+	move_down = "<C-j>",
+	move_to = "<leader>qm",
+	save = "<leader>qs",
+	load = "<leader>ql",
+	load_append = "<leader>qL",
+	sort_asc = "<leader>q<",
+	sort_desc = "<leader>q>",
+      },
+    },
+    commands = true, -- add commands during setup
+    notify = {
+      enabled = true,
+      level = vim.log.levels.INFO,
+    },
+  }
+<
+
+------------------------------------------------------------------------------
+Commands                                                       *qfctl-commands*
+
+:QFCtlAdd                                                           *:QFCtlAdd*
+    Add current line to quickfix.
+
+:QFCtlAddPrompt                                               *:QFCtlAddPrompt*
+    Add entry to quickfix with prompt.
+
+:QFCtlEdit                                                         *:QFCtlEdit*
+    Edit current quickfix entry.
+
+:QFCtlRemove                                                     *:QFCtlRemove*
+    Remove current quickfix entry.
+
+:QFCtlUp                                                             *:QFCtlUp*
+    Move entry up.
+
+:QFCtlDown                                                         *:QFCtlDown*
+    Move entry down
+
+:QFCtlMoveTo                                                     *:QFCtlMoveTo*
+    Move entry to position.
+
+:QFCtlSave                                                         *:QFCtlSave*
+    Save quickfix list.
+
+:QFCtlLoad                                                         *:QFCtlLoad*
+    Load quickfix list.
+
+:QFCtlLoadAppend                                             *:QFCtlLoadAppend*
+    Append quickfix list.
+
+:QFCtlSort                                                         *:QFCtlSort*
+    Sort quickfix list. Optionally pass "desc" or "descending", defaults to
+    ascending.
+
+Note: Commands are only created if `commands = true` in config.
+
+ vim:tw=78:ts=8:noet:ft=help:norl:

@@ -5,8 +5,7 @@ local M = {}
 
 local default_config = {
   data_dir = vim.fn.stdpath("data") .. "/qfctl-lists",
-
-  mappings = {
+  mappings = { -- leave any part nil to disable
     global = {
       add_current_line = "<leader>qa",
       add_prompt = "<leader>qA",
@@ -25,7 +24,7 @@ local default_config = {
       sort_desc = "<leader>q>",
     },
   },
-  commands = true,
+  commands = true, -- add commands during setup
   notify = {
     enabled = true,
     level = vim.log.levels.INFO,
@@ -454,8 +453,9 @@ end
 -- Setup keymaps.
 local function setup_keymaps()
   local map = vim.keymap.set
-  local global_maps = config.mappings.global
-  local qf_maps = config.mappings.qf
+  local mappings = config.mappings or {}
+  local global_maps = mappings.global or {}
+  local qf_maps = mappings.qf or {}
 
   if global_maps.add_current_line and global_maps.add_current_line ~= "" then
     map("n", global_maps.add_current_line, function()
